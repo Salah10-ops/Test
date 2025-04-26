@@ -138,15 +138,15 @@ Jenkins is running on an EC2 instance in your AWS environment. Use the Jenkins L
 
 3. Create a Jenkins Pipeline
 
-    1. Create a new pipeline job in Jenkins and configure it to:
+    Create a new pipeline job in Jenkins and configure it to:
     
-    2. Pull the code from your GitHub repository.
+    1. Pull the code from your GitHub repository.
     
-    3. Build the Docker image.
+    2. Build the Docker image.
     
-    4. Push the Docker image to AWS ECR.
+    3. Push the Docker image to AWS ECR.
     
-    5. Deploy the app to Kubernetes (EKS) using kubectl.
+    4. Deploy the app to Kubernetes (EKS) using kubectl.
 
 
 This pipeline:
@@ -169,4 +169,77 @@ After that we need to allow the jenkins to connect to the Github repo to get the
 Before setting up Prometheus and Grafana, ensure you have Helm installed on your Jenkins server. Helm is a package manager for Kubernetes that helps you manage Kubernetes applications.
 
 You can install Helm by following the Helm installation guide.
+
+### Steps to Set Up Prometheus and Grafana Using Helm
+
+1. Add Prometheus and Grafana Helm Repositories
+
+To begin, you need to add the official Prometheus and Grafana Helm charts to your Helm repository. Run the following commands on your Jenkins server:
+
+```bash 
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+```
+
+2. Install Prometheus and Grafana
+
+Once the Helm repositories are added, install Prometheus using the following Helm command. This will set up the Prometheus monitoring solution and Similarly, to install Grafana, in your Kubernetes cluster:
+
+```bash 
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+
+helm install grafana grafana/grafana --namespace monitoring
+```
+
+
+3. Set up External Access to Grafana & Prometheus
+
+By default, Grafana and Prometheus might not be accessible externally. You need to expose them using LoadBalancer services (or Ingress if you're using ingress controllers) for external access. Here’s how to do that.
+
+    1. For Prometheus
+
+    Prometheus is generally accessed through port 9090. You will need to expose it via a LoadBalancer service:
+
+```bash
+
+kubectl expose svc prometheus-kube-prometheus-prometheus --type=LoadBalancer --name=prometheus-service --namespace monitoring --port=9090 --target-port=9090
+
+```
+
+This will create a LoadBalancer service for Prometheus, allowing it to be accessed externally.
+
+    2. For Grafana
+    
+    Grafana is generally accessed via port 3000. You need to expose Grafana via a LoadBalancer service as well:
+
+```bash
+
+kubectl expose svc grafana --type=LoadBalancer --name=grafana-service --namespace monitoring --port=80 --target-port=3000
+
+```
+
+This will create a LoadBalancer service for Grafana, allowing you to access it externally on port 80.
+
+4. Retrieve External IPs
+After exposing both services, you can get the external IP addresses of Prometheus and Grafana:
+
+```bash
+kubectl get svc -n monitoring 
+
+```
+
+Access via LoadBalancer URLs:
+
+Prometheus: http://<prometheus-lb-dns>:9090
+
+Grafana: http://<grafana-lb-dns>
+
+5. Login to Grafana (admin/admin123) and import dashboards for:
+
+    1. Kubernetes cluster monitoring
+
+    2. Jenkins server monitoring
+
+
 
