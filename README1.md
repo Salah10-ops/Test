@@ -30,11 +30,8 @@ Start by cloning the repository to your local machine:
 ```bash
 git clone git@github.com:Salah10-ops
 cd graduation_project
-
----------
+```
 
 ### 2. Configure AWS CLI
 
 You need to configure the AWS CLI with your AWS credentials. Run the following command and provide your AWS access key, secret key, and region when prompted:
-
-bash
