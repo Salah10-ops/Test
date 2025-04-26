@@ -18,38 +18,22 @@ Before you start, install the following tools:
 - A GitHub Account
 - An AWS Account
 
-## Clone the Repository
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+Start by cloning the repository to your local machine:
 
 ```bash
-git clone <your-github-repo-url>
-cd <repo-name>
+git clone git@github.com:Salah10-ops
+cd graduation_project
 
-## 2. Configure AWS CLI
+
+### 2. Configure AWS CLI
 
 You need to configure the AWS CLI with your AWS credentials. Run the following command and provide your AWS access key, secret key, and region when prompted:
 
 bash
-Copy
-Edit
-aws configure
-You’ll be asked to enter the following details:
-
-AWS Access Key ID: Your AWS access key (you can generate this in the AWS console under IAM).
-
-AWS Secret Access Key: Your AWS secret key (generated in IAM).
-
-Default region name: Choose us-east-1 or your preferred region.
-
-Default output format: You can leave this as json.
-
-Additionally, ensure that your environment variables for AWS are set:
-
-bash
-Copy
-Edit
-export AWS_ACCESS_KEY_ID="your_access_key"
-export AWS_SECRET_ACCESS_KEY="your_secret_key"
-export AWS_REGION="us-east-1"
-You can also use an .env file if you prefer not to set them manually every time.
-
-
