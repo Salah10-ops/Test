@@ -31,6 +31,7 @@ Start by cloning the repository to your local machine:
 git clone git@github.com:Salah10-ops
 cd graduation_project
 
+---------
 
 ### 2. Configure AWS CLI
 
