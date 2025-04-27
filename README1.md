@@ -1,4 +1,5 @@
 # DevOps Pipeline for Redis-Backed Python Counter App
+![Architecture diagram 1](https://github.com/user-attachments/assets/fadd190c-922d-4718-8888-c3568586ad6e)
 
 ## Overview
 
